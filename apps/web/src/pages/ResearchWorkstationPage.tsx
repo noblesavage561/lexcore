@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { Search, Zap, BookOpen, FileText, Building, Globe, MapPin, Users, Landmark } from 'lucide-react'
+import { Search, Zap, BookOpen, FileText, Building, Globe, Users, Landmark } from 'lucide-react'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { Spinner } from '@/components/ui/Spinner'

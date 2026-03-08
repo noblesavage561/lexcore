@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { FileText, Users, CheckSquare, AlertTriangle, TrendingUp, Activity } from 'lucide-react'
+import { FileText, CheckSquare, AlertTriangle, TrendingUp, Activity } from 'lucide-react'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'

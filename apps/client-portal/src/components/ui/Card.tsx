@@ -4,11 +4,15 @@ interface CardProps {
   children: React.ReactNode
   className?: string
   padding?: boolean
+  onClick?: () => void
 }
 
-export function Card({ children, className, padding = true }: CardProps) {
+export function Card({ children, className, padding = true, onClick }: CardProps) {
   return (
-    <div className={clsx('bg-white rounded-xl border border-gray-200 shadow-sm', padding && 'p-6', className)}>
+    <div
+      className={clsx('bg-white rounded-xl border border-gray-200 shadow-sm', padding && 'p-6', onClick && 'cursor-pointer hover:shadow-md transition-shadow', className)}
+      onClick={onClick}
+    >
       {children}
     </div>
   )

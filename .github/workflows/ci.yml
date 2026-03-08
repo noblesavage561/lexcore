@@ -61,7 +61,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install agent dependencies
-        run: pip install pytest
+        run: pip install pytest pytest-asyncio
       - name: Run agent tests
         run: python -m pytest tests/ -v --tb=short
         working-directory: services/agents
