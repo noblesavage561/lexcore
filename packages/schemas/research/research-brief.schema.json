@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexcore.bbaservices.com/schemas/research/research-brief",
+  "title": "ResearchBrief",
+  "description": "Structured research output from Agent 2 — Legal Research Agent",
+  "type": "object",
+  "required": ["brief_id", "matter_id", "session_id", "domain", "query", "findings", "statutes_cited", "cases_cited", "confidence_score", "open_questions", "source_citations"],
+  "additionalProperties": false,
+  "properties": {
+    "brief_id": { "type": "string", "format": "uuid" },
+    "matter_id": { "type": "string", "format": "uuid" },
+    "session_id": { "type": "string", "format": "uuid" },
+    "domain": { "type": "string", "enum": ["legal", "tax", "real_estate", "heritage", "political", "consumer_credit", "international", "business"] },
+    "query": { "type": "string", "minLength": 1 },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["finding_id", "summary", "confidence", "citations"],
+        "properties": {
+          "finding_id": { "type": "string" },
+          "summary": { "type": "string" },
+          "detail": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "citations": { "type": "array", "items": { "type": "string" } },
+          "requires_human_review": { "type": "boolean" }
+        }
+      }
+    },
+    "statutes_cited": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "section", "effective_date"],
+        "properties": {
+          "title": { "type": "string" },
+          "section": { "type": "string" },
+          "effective_date": { "type": "string", "format": "date" },
+          "jurisdiction": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "cases_cited": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "citation"],
+        "properties": {
+          "name": { "type": "string" },
+          "citation": { "type": "string" },
+          "court": { "type": "string" },
+          "year": { "type": "integer" },
+          "relevance": { "type": "string" }
+        }
+      }
+    },
+    "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "open_questions": { "type": "array", "items": { "type": "string" } },
+    "source_citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "retrieved_at"],
+        "properties": {
+          "source": { "type": "string" },
+          "section": { "type": "string" },
+          "page": { "type": "integer" },
+          "retrieved_at": { "type": "string", "format": "date-time" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "next_steps": { "type": "array", "items": { "type": "string" } },
+    "requires_human_review": { "type": "boolean" },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}

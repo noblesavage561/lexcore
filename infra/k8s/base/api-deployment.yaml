@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lexcore-api
+  namespace: lexcore
+  labels:
+    app: lexcore-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lexcore-api
+  template:
+    metadata:
+      labels:
+        app: lexcore-api
+    spec:
+      containers:
+        - name: api
+          image: lexcore-api:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lexcore-secrets
+                  key: database-url
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lexcore-secrets
+                  key: secret-key
+            - name: ANTHROPIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lexcore-secrets
+                  key: anthropic-api-key
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health/ready
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lexcore-api
+  namespace: lexcore
+spec:
+  selector:
+    app: lexcore-api
+  ports:
+    - port: 8000
+      targetPort: 8000

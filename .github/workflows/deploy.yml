@@ -1,0 +1,58 @@
+name: LexCore Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy-api:
+    name: Deploy API Service
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push API image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/lexcore-api:$IMAGE_TAG ./services/api
+          docker push $ECR_REGISTRY/lexcore-api:$IMAGE_TAG
+
+  deploy-web:
+    name: Deploy Web Apps
+    runs-on: ubuntu-latest
+    needs: deploy-api
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Build Admin Console
+        run: |
+          cd apps/web && npm install && npm run build
+
+      - name: Build Client Portal
+        run: |
+          cd apps/client-portal && npm install && npm run build
+
+      - name: Deploy to S3/CloudFront
+        run: echo "Deploy step — configure with your AWS S3 bucket and CloudFront distribution"

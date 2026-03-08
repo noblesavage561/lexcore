@@ -1,0 +1,26 @@
+{
+  "name": "lexcore",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LexCore — AI-Powered Intelligence Platform by BBA Services",
+  "workspaces": [
+    "apps/web",
+    "apps/client-portal",
+    "packages/schemas",
+    "packages/evals"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=apps/web\" \"npm run dev --workspace=apps/client-portal\"",
+    "build": "npm run build --workspace=apps/web && npm run build --workspace=apps/client-portal",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "validate-schemas": "npm run validate --workspace=packages/schemas"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

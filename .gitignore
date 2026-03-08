@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+.npm/
+.pnpm-store/
+
+# Build artifacts
+dist/
+build/
+.vite/
+*.pyc
+__pycache__/
+*.egg-info/
+.eggs/
+*.so
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# Python
+.venv/
+venv/
+env/
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Terraform state (managed remotely)
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes secrets
+infra/k8s/**/*secret*.yaml
+
+# Logs
+*.log
+logs/
+
+# Temp
+tmp/
+.tmp/

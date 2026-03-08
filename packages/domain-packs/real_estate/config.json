@@ -1,0 +1,15 @@
+{
+  "pack_id": "real_estate",
+  "version": "0.1.0",
+  "display_name": "Real Estate Due Diligence Engine",
+  "sources": [
+    { "id": "county_records", "name": "Palm Beach County Property Records", "type": "public_records" },
+    { "id": "propstream", "name": "PropStream", "type": "data_provider" },
+    { "id": "attom", "name": "ATTOM Data Solutions", "type": "data_provider" },
+    { "id": "fema_flood", "name": "FEMA Flood Map Service Center", "type": "regulatory" },
+    { "id": "ucc_filings", "name": "UCC Filing Database", "type": "lien_search" },
+    { "id": "blm_patents", "name": "BLM General Land Office Records", "type": "title" }
+  ],
+  "deal_tools": ["chain_of_title", "lien_search", "zoning_query", "permit_history", "flood_overlay", "1031_tracker", "lease_abstraction"],
+  "confidence_threshold": 0.8
+}

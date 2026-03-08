@@ -1,0 +1,17 @@
+{
+  "pack_id": "tax",
+  "version": "0.1.0",
+  "display_name": "Tax Law — Federal, State, International",
+  "sources": [
+    { "id": "irc", "name": "Internal Revenue Code (26 U.S.C.)", "type": "statute" },
+    { "id": "treasury_regs", "name": "Treasury Regulations (26 CFR)", "type": "regulation" },
+    { "id": "irs_guidance", "name": "IRS Revenue Rulings, PLRs, TAMs", "type": "guidance" },
+    { "id": "tax_court", "name": "U.S. Tax Court Opinions", "type": "case_law" },
+    { "id": "oecd_tp", "name": "OECD Transfer Pricing Guidelines", "type": "international" },
+    { "id": "beps", "name": "BEPS / Pillar Two Framework", "type": "international" },
+    { "id": "us_tax_treaties", "name": "U.S. Tax Treaty Network", "type": "treaty" }
+  ],
+  "analysis_types": ["CFC", "GILTI", "FDII", "BEAT", "transfer_pricing", "VAT_GST", "pillar_two", "section_1031"],
+  "confidence_threshold": 0.85,
+  "memo_templates": ["kpmg_international", "transfer_pricing", "treaty_analysis"]
+}

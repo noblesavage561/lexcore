@@ -1,0 +1,17 @@
+{
+  "pack_id": "heritage",
+  "version": "0.1.0",
+  "display_name": "Genealogy & Heritage Research Engine",
+  "sources": [
+    { "id": "chronicling_america", "name": "Chronicling America Newspaper Archive", "type": "newspaper" },
+    { "id": "census_1790_1950", "name": "U.S. Census Records 1790–1950", "type": "genealogy" },
+    { "id": "blm_patents", "name": "BLM Land Patent Database", "type": "property" },
+    { "id": "vital_records", "name": "Florida Vital Records", "type": "genealogy" },
+    { "id": "military_records", "name": "Military Service Records", "type": "genealogy" },
+    { "id": "probate_records", "name": "Probate & Will Index", "type": "legal" },
+    { "id": "indigenous_treaties", "name": "Indigenous Land Rights & Treaty Database", "type": "legal" }
+  ],
+  "special_modules": ["yamasee_heritage_florida", "indigenous_land_rights", "racial_reclassification_analysis"],
+  "yamasee_communities": ["immokalee", "dade_county", "miami", "tampa", "duval_county"],
+  "confidence_threshold": 0.65
+}

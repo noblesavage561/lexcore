@@ -1,0 +1,8 @@
+{
+  "name": "@lexcore/evals",
+  "version": "0.1.0",
+  "description": "LexCore evaluation harness — citation graders, safety tests, schema validators",
+  "scripts": {
+    "test": "node graders/citation_grader.js && node graders/schema_grader.js"
+  }
+}
