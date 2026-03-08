@@ -43,7 +43,7 @@ services:
       DATABASE_URL: postgresql+asyncpg://lexcore:lexcore@postgres:5432/lexcore
       REDIS_URL: redis://redis:6379/0
       ENVIRONMENT: development
-      SECRET_KEY: dev-secret-key-change-in-production
+      SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
     ports:
       - "8000:8000"
     depends_on:

@@ -20,8 +20,11 @@ export function LoginPage() {
     try {
       const res = await authApi.login(email, password)
       const { access_token } = res.data
-      // Decode user from token payload
-      const payload = JSON.parse(atob(access_token.split('.')[1]))
+      // Decode user from token payload — validate structure before use
+      const parts = (access_token as string).split('.')
+      if (parts.length !== 3) throw new Error('Malformed token')
+      const payload = JSON.parse(atob(parts[1]))
+      if (!payload.sub || !payload.email || !payload.role) throw new Error('Invalid token payload')
       setAuth(access_token, { id: payload.sub, email: payload.email, full_name: 'Staff User', role: payload.role, tier: 'enterprise', tenant_id: payload.tenant_id })
       navigate('/dashboard')
     } catch {

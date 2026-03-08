@@ -19,7 +19,7 @@ interface Approval {
 
 export function ApprovalQueuePage() {
   const [filter, setFilter] = useState<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL')
-  const [note, setNote] = useState('')
+  const [notes, setNotes] = useState<Record<string, string>>({})
   const qc = useQueryClient()
 
   const { data, isLoading } = useQuery({
@@ -29,10 +29,10 @@ export function ApprovalQueuePage() {
 
   const decide = useMutation({
     mutationFn: ({ id, decision }: { id: string; decision: string }) =>
-      approvalsApi.decide(id, decision, note),
-    onSuccess: () => {
+      approvalsApi.decide(id, decision, notes[id]),
+    onSuccess: (_, { id }) => {
       qc.invalidateQueries({ queryKey: ['approvals'] })
-      setNote('')
+      setNotes(prev => { const n = { ...prev }; delete n[id]; return n })
     },
   })
 
@@ -113,7 +113,8 @@ export function ApprovalQueuePage() {
                       type="text"
                       placeholder="Audit note (required for deny/return)..."
                       className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
-                      onChange={(e) => setNote(e.target.value)}
+                      value={notes[approval.id] ?? ''}
+                      onChange={(e) => setNotes(prev => ({ ...prev, [approval.id]: e.target.value }))}
                     />
                   </div>
 
