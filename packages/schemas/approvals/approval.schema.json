@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexcore.bbaservices.com/schemas/approvals/approval",
+  "title": "Approval",
+  "description": "Immutable approval record — write once, never modify after resolution",
+  "type": "object",
+  "required": ["approval_id", "requested_by", "scope", "action_summary", "risk_score", "proposed_action", "artifacts"],
+  "additionalProperties": false,
+  "properties": {
+    "approval_id": { "type": "string", "format": "uuid" },
+    "requested_by": { "type": "string" },
+    "scope": { "type": "string", "enum": ["email", "filing", "calendar", "document", "payment", "communication"] },
+    "action_summary": { "type": "string" },
+    "risk_score": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+    "proposed_action": { "type": "object" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_id", "type", "preview"],
+        "properties": {
+          "artifact_id": { "type": "string" },
+          "type": { "type": "string" },
+          "preview": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "approver_decision": {
+      "type": "object",
+      "properties": {
+        "decision": { "type": "string", "enum": ["approved", "denied", "returned"] },
+        "approver_id": { "type": "string" },
+        "note": { "type": "string" },
+        "decided_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "client_id": { "type": "string", "format": "uuid" },
+    "matter_id": { "type": "string", "format": "uuid" },
+    "action_plan_id": { "type": "string", "format": "uuid" },
+    "requested_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time" }
+  }
+}

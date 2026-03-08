@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexcore.bbaservices.com/schemas/intake/action-plan",
+  "title": "ActionPlan",
+  "description": "Structured action plan output for orchestrator routing",
+  "type": "object",
+  "required": ["project_id", "summary", "actions"],
+  "additionalProperties": false,
+  "properties": {
+    "project_id": { "type": "string", "format": "uuid" },
+    "summary": { "type": "string", "minLength": 1 },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["action_id", "title", "owner", "priority", "action_type", "tool_requirements", "approval_gate", "provenance"],
+        "properties": {
+          "action_id": { "type": "string", "format": "uuid" },
+          "title": { "type": "string" },
+          "owner": { "type": "string", "enum": ["agent_1", "agent_2", "agent_3", "agent_4", "agent_5", "agent_6", "agent_7", "agent_8", "human"] },
+          "priority": { "type": "string", "enum": ["p0", "p1", "p2", "p3"] },
+          "due_date": { "type": "string", "format": "date" },
+          "action_type": { "type": "string", "enum": ["research", "document_analysis", "draft", "file", "communicate", "monitor", "analyze"] },
+          "tool_requirements": { "type": "array", "items": { "type": "string" } },
+          "approval_gate": { "type": "string", "enum": ["none", "review_required", "approve_before_send", "approve_before_submit"] },
+          "provenance": { "type": "array", "items": { "type": "string" } },
+          "status": { "type": "string", "enum": ["pending", "in_progress", "awaiting_approval", "approved", "denied", "completed", "failed"] }
+        }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "client_id": { "type": "string", "format": "uuid" },
+    "matter_id": { "type": "string", "format": "uuid" }
+  }
+}

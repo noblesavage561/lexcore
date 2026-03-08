@@ -1,0 +1,109 @@
+name: LexCore CI
+
+on:
+  push:
+    branches: [main, develop, "feature/**", "copilot/**"]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  # ── Schema Validation ────────────────────────────────────────────────────────
+  validate-schemas:
+    name: Validate JSON Schemas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: packages/schemas/package.json
+      - name: Install schema dependencies
+        run: npm install
+        working-directory: packages/schemas
+      - name: Validate all schemas
+        run: node scripts/validate.js
+        working-directory: packages/schemas
+
+  # ── API Tests ────────────────────────────────────────────────────────────────
+  api-tests:
+    name: API Tests (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: services/api/requirements.txt
+      - name: Install API dependencies
+        run: pip install -r requirements.txt
+        working-directory: services/api
+      - name: Run API tests
+        run: pytest tests/ -v --tb=short
+        working-directory: services/api
+        env:
+          DATABASE_URL: "sqlite+aiosqlite:///:memory:"
+          SECRET_KEY: "test-secret-key"
+          ANTHROPIC_API_KEY: "test-key"
+          PINECONE_API_KEY: "test-key"
+
+  # ── Agent Tests ──────────────────────────────────────────────────────────────
+  agent-tests:
+    name: Agent Tests (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install agent dependencies
+        run: pip install pytest pytest-asyncio
+      - name: Run agent tests
+        run: python -m pytest tests/ -v --tb=short
+        working-directory: services/agents
+
+  # ── Web App Build ────────────────────────────────────────────────────────────
+  web-build:
+    name: Admin Console Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/web/package.json
+      - name: Install dependencies
+        run: npm install
+        working-directory: apps/web
+      - name: Run tests
+        run: npm test
+        working-directory: apps/web
+      - name: Build
+        run: npm run build
+        working-directory: apps/web
+
+  # ── Client Portal Build ──────────────────────────────────────────────────────
+  client-portal-build:
+    name: Client Portal Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/client-portal/package.json
+      - name: Install dependencies
+        run: npm install
+        working-directory: apps/client-portal
+      - name: Run tests
+        run: npm test
+        working-directory: apps/client-portal
+      - name: Build
+        run: npm run build
+        working-directory: apps/client-portal

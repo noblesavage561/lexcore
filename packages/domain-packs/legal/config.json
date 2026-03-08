@@ -1,0 +1,18 @@
+{
+  "pack_id": "legal",
+  "version": "0.1.0",
+  "display_name": "Federal & Florida Legal Research",
+  "sources": [
+    { "id": "usc", "name": "U.S. Code", "url": "https://uscode.house.gov", "type": "statute" },
+    { "id": "cfr", "name": "Code of Federal Regulations", "url": "https://www.ecfr.gov", "type": "regulation" },
+    { "id": "federal_register", "name": "Federal Register", "url": "https://www.federalregister.gov", "type": "regulatory" },
+    { "id": "florida_statutes", "name": "Florida Statutes", "url": "http://www.leg.state.fl.us/statutes", "type": "statute" },
+    { "id": "florida_admin_code", "name": "Florida Administrative Code", "url": "https://www.flrules.org", "type": "regulation" },
+    { "id": "scotus", "name": "Supreme Court Opinions", "url": "https://www.supremecourt.gov", "type": "case_law" },
+    { "id": "pacer", "name": "PACER Federal Court Records", "url": "https://pacer.uscourts.gov", "type": "case_law" }
+  ],
+  "citation_format": "{title}, § {section} (eff. {effective_date})",
+  "confidence_threshold": 0.7,
+  "jurisdictions": ["federal", "florida", "11th_circuit"],
+  "municipalities": ["delray_beach_fl", "riviera_beach_fl", "palm_beach_county_fl"]
+}

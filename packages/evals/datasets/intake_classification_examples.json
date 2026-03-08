@@ -1,0 +1,32 @@
+[
+  {
+    "input": "I need help analyzing a commercial lease agreement with rent escalations",
+    "expected_domain": "business",
+    "expected_risk": "LOW",
+    "expected_requires_review": false
+  },
+  {
+    "input": "Submit amended tax returns with the IRS for my offshore accounts",
+    "expected_domain": "tax",
+    "expected_risk": "HIGH",
+    "expected_requires_review": true
+  },
+  {
+    "input": "Chain of title analysis for property at 123 Main Street, Delray Beach FL",
+    "expected_domain": "real_estate",
+    "expected_risk": "LOW",
+    "expected_requires_review": false
+  },
+  {
+    "input": "Research Yamasee heritage records in Immokalee Florida",
+    "expected_domain": "heritage",
+    "expected_risk": "LOW",
+    "expected_requires_review": false
+  },
+  {
+    "input": "Monitor HB 1203 Florida Legislature committee votes",
+    "expected_domain": "political",
+    "expected_risk": "LOW",
+    "expected_requires_review": false
+  }
+]
